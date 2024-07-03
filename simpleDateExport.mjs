@@ -9,14 +9,47 @@ export class SimpleDate {
     year() {
         return this.date.getFullYear();
     }
-    month() {
-        return this.date.getMonth();
+    month(inpStr) {
+        const inpstr = inpStr.toUpperCase();
+        switch (inpstr) {
+            case ('MMMM'):
+                const month = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"];
+                const d = this.date;
+                let name = month[d.getMonth()];
+                return name;
+
+            case ('MMM'):
+                const month1 = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const d1 = this.date;
+                let name1 = month1[d1.getMonth()];
+                return name1;
+
+            case ('MM'):
+                const d2 = this.date.getMonth();
+                const d3 = (d2 < 10 ? '0' : '') + (this.date.getMonth() + 1);
+                return d3;
+
+            default:
+                return this.date.getMonth() + 1;
+
+        }
+
+
     }
     date() {
         return this.date.getDate();
     }
-    day() {
-        return this.date.getDate();
+    day(formatStr) {
+        switch (formatStr.toUpperCase()) {
+            case 'D':
+                return this.date.getDate();
+            case 'DD':
+                return (this.date.getDate() < 10 ? '0' : '') + this.date.getDate();
+            default:
+                return this.date.getDay();
+        }
     }
     hours() {
         return this.date.getHours();
@@ -145,16 +178,24 @@ export class SimpleDate {
     }
     format(formatStr) {
         const YYYY = this.year();
-        const MM = this.month();
-        const DD = this.day();
+        const YY = String(YYYY).slice(-2);
+        const MM = this.month('MM');
+        const MMM = this.month('MMM');
+        const MMMM = this.month('MMMM');
+        const DD = this.day('DD');
+        const D = this.day('D');
         const HH = this.hours();
         const mm = this.minutes();
         const ss = this.seconds();
 
         return formatStr
             .replace('YYYY', YYYY)
+            .replace('YY', YY)
+            .replace('MMMM', MMMM)
+            .replace('MMM', MMM)
             .replace('MM', MM)
             .replace('DD', DD)
+            .replace('D', D)
             .replace('HH', HH)
             .replace('mm', mm)
             .replace('ss', ss)
