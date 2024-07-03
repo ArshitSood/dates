@@ -2,7 +2,8 @@ export class SimpleDate {
     constructor(date = Date()) {
         this.date = new Date(date)
     }
-    toString(){
+
+    toString() {
         return this.date.toString();
     }
     year() {
@@ -12,6 +13,9 @@ export class SimpleDate {
         return this.date.getMonth();
     }
     date() {
+        return this.date.getDate();
+    }
+    day() {
         return this.date.getDate();
     }
     hours() {
@@ -25,9 +29,9 @@ export class SimpleDate {
     }
     timeMsec() {
         return this.date.getTime()
-    
+
     }
-    time(){
+    time() {
         let z, ms, secs, mins, hrs;
         ms = this.date.getMilliseconds()
         secs = this.date.getSeconds()
@@ -41,30 +45,34 @@ export class SimpleDate {
         switch (period1) {
             case 'years':
             case 'year':
-                this.date.setFullYear(this.date.getFullYear() + amount)
+                this.date.setFullYear(this.date.getFullYear() + amount);
+                return this;
                 break;
             case 'months':
             case 'month':
-                this.date.setMonth(this.date.getMonth() + amount)
+                this.date.setMonth(this.date.getMonth() + amount);
+                return this;
                 break;
             case 'days':
             case 'day':
-                this.date.setDate(this.date.getDate() + amount)
+                this.date.setDate(this.date.getDate() + amount);
+                return this;
                 break;
             case 'hours':
             case 'hour':
-                this.date.setHours(this.date.getHours() + amount)
+                this.date.setHours(this.date.getHours() + amount);
+                return this;
                 break;
             case 'minute':
             case 'minutes':
-                this.date.setMinutes(this.date.getMinutes() + amount)
+                this.date.setMinutes(this.date.getMinutes() + amount);
+                return this;
                 break;
             case 'seconds':
             case 'second':
-                this.date.setSeconds(this.date.getSeconds() + amount)
+                this.date.setSeconds(this.date.getSeconds() + amount);
+                return this;
                 break;
-
-
         }
     }
     subtract(amount, period) {
@@ -72,27 +80,33 @@ export class SimpleDate {
         switch (period1) {
             case 'years':
             case 'year':
-                this.date.setFullYear(this.date.getFullYear() - amount)
+                this.date.setFullYear(this.date.getFullYear() - amount);
+                return this;
                 break;
             case 'months':
             case 'month':
-                this.date.setMonth(this.date.getMonth() - amount)
+                this.date.setMonth(this.date.getMonth() - amount);
+                return this;
                 break;
             case 'days':
             case 'day':
-                this.date.setDate(this.date.getDate() - amount)
+                this.date.setDate(this.date.getDate() - amount);
+                return this;
                 break;
             case 'hours':
             case 'hour':
-                this.date.setHours(this.date.getHours() - amount)
+                this.date.setHours(this.date.getHours() - amount);
+                return this;
                 break;
             case 'minute':
             case 'minutes':
-                this.date.setMinutes(this.date.getMinutes() - amount)
+                this.date.setMinutes(this.date.getMinutes() - amount);
+                return this;
                 break;
             case 'seconds':
             case 'second':
-                this.date.setSeconds(this.date.getSeconds() - amount)
+                this.date.setSeconds(this.date.getSeconds() - amount);
+                return this;
                 break;
         }
     }
@@ -106,27 +120,47 @@ export class SimpleDate {
             return false;
         }
     }
-    isAfter(date){
+    isAfter(date) {
         const x = this.date.getTime();
         const y = date.timeMsec();
-        if (x>y){
+        if (x > y) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
-    isBefore(date){
+    isBefore(date) {
         const x = this.date.getTime();
         const y = date.timeMsec();
-        if (x<y){
+        if (x < y) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
-    utc(){
+    utc() {
         return this.date.toUTCString();
     }
+    format(formatStr) {
+        const YYYY = this.year();
+        const MM = this.month();
+        const DD = this.day();
+        const HH = this.hours();
+        const mm = this.minutes();
+        const ss = this.seconds();
+
+        return formatStr
+            .replace('YYYY', YYYY)
+            .replace('MM', MM)
+            .replace('DD', DD)
+            .replace('HH', HH)
+            .replace('mm', mm)
+            .replace('ss', ss)
+
+    }
+}
+export function simpleDate(date = new Date()) {
+    return new SimpleDate(date);
 }
